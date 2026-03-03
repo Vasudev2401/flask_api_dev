@@ -79,4 +79,12 @@ class user_model():
         ##Update users set col = val , col = val where id = {id}        
         
 
+    def user_upload_avatar_model(self,id,filepath):
+        self.cursor.execute(f"Update users set avatar = '{filepath}' where id={id}")
+        if self.cursor.rowcount > 0:
+            return make_response({"message":"File uploaded successfully"},201)
+        else:
+            return make_response({"message":"Nothing to update"},202) 
+ 
+
         
