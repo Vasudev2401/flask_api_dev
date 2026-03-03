@@ -8,6 +8,10 @@ obj = user_model()
 def user_getall_controller():
     return obj.user_getall_model()
 
+@app.route('/user/getall/limit/<int:limit>/page/<int:page>')
+def user_getall_controller_by_page(limit,page):
+    return obj.user_getall_model_by_page(limit,page)
+
 @app.route('/user/addone',methods = ['POST'])
 def user_addone_controller():
     return obj.user_addone_model(request.form)

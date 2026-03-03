@@ -27,8 +27,22 @@ class user_model():
         else:
             return make_response({"message":"No data found"},204)
         
+    def user_getall_model_by_page(self,limit,page):
+        ##business logic
+        ##Query Execution code
+        start = ((page * limit) - limit)
+        self.cursor.execute(f'Select * from users limit {start} , {limit}')
+        result = self.cursor.fetchall()
+        if len(result) > 0:
+            # return json.dumps(result)
+            res = make_response({"payload":result,"page_no":page,"limit":limit},200)
+            res.headers["Access-Control-Allow-Origin"] = "*"
+            return res
+        else:
+            return make_response({"message":"No data found"},204)
+
     def user_addone_model(self,data):
-        self.cursor.execute(f"Insert into users(name,email,phone,role,password) values('{data['name']}','{data['phone']}','{data['email']}','{data['role']}','{data['password']}')")
+        self.cursor.execute(f"Insert into users(name,email,phone,role,password) values('{data['name']}','{data['email']}','{data['phone']}','{data['role']}','{data['password']}')")
         return make_response({"message":"User created successfully"},201)
         
     def user_update_model(self,data):
